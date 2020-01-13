@@ -1,0 +1,1 @@
+wcc main.c -5 -i=/usr/bin/watcom/h -bt=dos

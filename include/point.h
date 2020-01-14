@@ -1,21 +1,25 @@
 #ifndef POINT_H
 #define POINT_H
 
-typedef struct {
+struct point2d {
     double x;
     double y;
-} point_2d;
+};
 
-typedef struct {
+struct point3d {
     double x;
     double y;
     double z;
-} point_3d;
+};
 
-double distSqRaw(double x1, double y1, double x2, double y2);
-double distSq(point_2d *point1, point_2d *point2);
+double distance2dSquaredRaw(double x1, double y1, double x2, double y2);
+double distance2dSquared(struct point2d *p1, struct point2d *p2);
+double distance2dRaw(double x1, double y1, double x2, double y2);
+double distance2d(struct point2d *p1, struct point2d *p2);
 
-double distRaw(double x1, double y1, double x2, double y2);
-double dist(point_2d *point1, point_2d *point2);
+double distance3dSquaredRaw(double x1, double y1, double z1, double x2, double y2, double z2);
+double distance3dSquared(struct point3d *p1, struct point3d *p2);
+double distance3dRaw(double x1, double y1, double z1, double x2, double y2, double z2);
+double distance3d(struct point3d *p1, struct point3d *p2);
 
 #endif

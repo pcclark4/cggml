@@ -6,12 +6,14 @@ enum { loop_size = 10000 };
 int main(void) {
     unsigned int i = 0;
     double distance;
-    point_2d myPoint = { 1.0, 1.0 };
-    point_3d my3dPoint = { 1.0, 1.0, 1.00020320302032 };
+    struct point2d myPoint = { 1.02, 1.01 };
+    struct point2d myPoint2 = { 3.044, 40.55 };
+
     for (i = 0; i < loop_size; i++) {
-        distance = distRaw(i, 2.0, -i, 98.44533);
-        
+        distance = distance2dRaw(i, 2.0, -i, 98.44533);
+        distance = distance2d(&myPoint, &myPoint2);
     }
+
     printf("Done!");
     return 0;
 }

@@ -1,1 +1,1 @@
-wcl src/main.c src/point.c -i=/usr/bin/watcom/h -i=include -bcl=dos -d2 -we
+wcl src/* -i=/usr/bin/watcom/h -i=include -bcl=dos -d2 -we

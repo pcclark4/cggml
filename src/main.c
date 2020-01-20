@@ -5,7 +5,7 @@
 
 enum
 {
-    loop_size = 10000
+    loop_size = 32000
 };
 
 int main(void)
@@ -17,7 +17,10 @@ int main(void)
     struct point_2d myPoints[5] = {
         {1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}, {7.0, 8.0}, {9.0, 10.0}};
 
-    nearestNeighbor = nearest_neighbor_exact_point_2d(&myPoint2, myPoints, 5);
+    for (i = 0; i < loop_size; i++) {
+        nearestNeighbor =
+            nearest_neighbor_exact_point_2d(&myPoint2, myPoints, 5);
+    }
     printf("Nearest neighbor: { %f, %f }\n", nearestNeighbor->x,
         nearestNeighbor->y);
 

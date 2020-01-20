@@ -1,5 +1,5 @@
-#ifndef POINT3D_H
-#define POINT3D_H
+#ifndef CGGML_POINT3D_H
+#define CGGML_POINT3D_H
 
 struct point_3d
 {

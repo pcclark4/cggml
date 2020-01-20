@@ -13,4 +13,4 @@ double point_3d_distance_squared(
 
 double point_3d_distance(const struct point_3d *p1, const struct point_3d *p2);
 
-#endif
+#endif // CGGML_POINT3D_H

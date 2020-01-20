@@ -12,4 +12,4 @@ double point_2d_distance_squared(
 
 double point_2d_distance(const struct point_2d *p1, const struct point_2d *p2);
 
-#endif
+#endif // CGGML_POINT2D_H

@@ -15,6 +15,6 @@ add_executable(cggml
         src/main.c
         src/nearest_neighbor_exact.c
         src/point_2d.c
-        src/point_3d.c)
+        src/point_3d.c include/nearest_neighbor_exact_point_2d.h src/nearest_neighbor_exact_point_2d.c)
 
 target_link_libraries(cggml m)

@@ -1,6 +1,6 @@
 ---
 Language:        Cpp
-# BasedOnStyle:  LLVM
+#BasedOnStyle:  LLVM
 AccessModifierOffset: -2
 AlignAfterOpenBracket: DontAlign
 AlignConsecutiveMacros: false
@@ -28,7 +28,7 @@ BraceWrapping:
   AfterCaseLabel:  false
   AfterClass:      false
   AfterControlStatement: false
-  AfterEnum:       false
+  AfterEnum:       true
   AfterFunction:   true
   AfterNamespace:  false
   AfterObjCDeclaration: false
@@ -42,7 +42,7 @@ BraceWrapping:
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
 BreakBeforeBinaryOperators: None
-BreakBeforeBraces: Attach
+BreakBeforeBraces: Mozilla
 BreakBeforeInheritanceComma: false
 BreakInheritanceList: BeforeColon
 BreakBeforeTernaryOperators: true

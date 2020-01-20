@@ -1,7 +1,8 @@
 #ifndef POINT3D_H
 #define POINT3D_H
 
-struct point_3d {
+struct point_3d
+{
     double x;
     double y;
     double z;

@@ -1,5 +1,5 @@
-#include "nearest_neighbor_exact_point_3d.h"
 #include "nearest_neighbor_exact.h"
+#include "point_3d.h"
 
 static double nearest_neighbor_exact_point_3d_dissimilarity(
     const void *p1, const void *p2)

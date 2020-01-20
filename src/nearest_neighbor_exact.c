@@ -1,4 +1,3 @@
-#include "nearest_neighbor_exact.h"
 #include <stddef.h>
 
 const void *nearest_neighbor_exact(const void *query, const void *searchSet,

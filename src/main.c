@@ -1,4 +1,3 @@
-#include "nearest_neighbor_exact.h"
 #include "nearest_neighbor_exact_point_2d.h"
 #include "point_2d.h"
 #include <stdio.h>

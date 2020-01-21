@@ -1,15 +1,15 @@
-#include <float.h>
+#include "numerical_typedefs.h"
 #include <stddef.h>
 
 const void *nearest_neighbor_exact(const void *query, const void *searchSet,
-    unsigned int searchSetSize, size_t elementSize,
-    double (*distanceFunc)(const void *, const void *))
+    uint32_t searchSetSize, size_t elementSize,
+    float64_t (*distanceFunc)(const void *, const void *))
 {
-    const char *basePtr = searchSet;
+    const int8_t *basePtr = searchSet;
     const void *nearestNeighbor = NULL;
-    double leastDistance = DBL_MAX;
-    double currentDistance = 0.0;
-    int i;
+    float64_t leastDistance = FLOAT64_MAX;
+    float64_t currentDistance;
+    uint32_t i;
 
     for (i = 0; i < searchSetSize; i++) {
         currentDistance = distanceFunc(query, basePtr);

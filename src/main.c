@@ -1,4 +1,5 @@
 #include "nearest_neighbor_exact_point_2d.h"
+#include "numerical_typedefs.h"
 #include "point_2d.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +11,7 @@ enum
 
 int main(void)
 {
-    unsigned int i = 0;
+    uint32_t i = 0;
     const struct point_2d *nearestNeighbor = NULL;
     struct point_2d myPoint = {1.02, 1.01};
     struct point_2d myPoint2 = {7.0, 4.0};

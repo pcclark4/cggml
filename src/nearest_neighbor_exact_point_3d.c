@@ -9,9 +9,9 @@ static double nearest_neighbor_exact_point_3d_dissimilarity(
 
 const struct point_3d *nearest_neighbor_exact_point_3d(
     const struct point_3d *query, const struct point_3d *searchSet,
-    int targetCount)
+    int searchSetSize)
 {
-    return nearest_neighbor_exact(query, searchSet, targetCount,
+    return nearest_neighbor_exact(query, searchSet, searchSetSize,
         sizeof(struct point_3d),
         &nearest_neighbor_exact_point_3d_dissimilarity);
 }

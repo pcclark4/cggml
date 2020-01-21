@@ -1,27 +1,26 @@
+#include <float.h>
 #include <stddef.h>
 
 const void *nearest_neighbor_exact(const void *query, const void *searchSet,
-    int searchSetSize, size_t elementSize,
+    unsigned int searchSetSize, size_t elementSize,
     double (*distanceFunc)(const void *, const void *))
 {
     const char *basePtr = searchSet;
-    double leastDissimilar = -1.0;
-    double currentDissimilar = 0.0;
     const void *nearestNeighbor = NULL;
+    double leastDistance = DBL_MAX;
+    double currentDistance = 0.0;
     int i;
 
-    for (i = 0; i < searchSetSize; i ++) {
-        currentDissimilar = distanceFunc(query, basePtr);
-        if (leastDissimilar == -1.0) {
-            leastDissimilar = currentDissimilar;
+    for (i = 0; i < searchSetSize; i++) {
+        currentDistance = distanceFunc(query, basePtr);
+
+        if (currentDistance < leastDistance) {
+            leastDistance = currentDistance;
             nearestNeighbor = basePtr;
-        } else {
-            if (currentDissimilar < leastDissimilar) {
-                leastDissimilar = currentDissimilar;
-                nearestNeighbor = basePtr;
-            }
         }
+
         basePtr += elementSize;
     }
+
     return nearestNeighbor;
 }

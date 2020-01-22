@@ -1,4 +1,4 @@
-#include "point_3d.c"
+#include "point_3d.h"
 #include <check.h>
 
 START_TEST (point_3d_distance_squared_test)

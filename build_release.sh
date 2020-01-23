@@ -1,1 +1,1 @@
-wcl src/* -i=/usr/bin/watcom/h -i=include -bcl=dos -ox -5
+wcl src/*.c -i=/usr/bin/watcom/h -i=include -bcl=dos -ox -5

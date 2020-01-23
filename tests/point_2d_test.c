@@ -10,14 +10,12 @@ START_TEST(point_2d_distance_squared_test)
 END_TEST
 
 START_TEST(point_2d_distance_test)
-{
-
-}
+{}
 END_TEST
 
 int main(void)
 {
-    struct point_2d myPoint = { 1.0, -1.0 };
+    struct point_2d myPoint = {1.0, -1.0};
     printf("{ %f, %f }", myPoint.x, myPoint.y);
     return 0;
 }

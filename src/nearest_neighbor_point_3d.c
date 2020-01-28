@@ -17,7 +17,7 @@ const struct point_3d *nearest_neighbor_exact_point_3d(
 
 void nearest_neighbors_exact_point_3d_multi(const struct point_3d *query,
     const struct point_3d *searchSet, uint32_t searchSetSize,
-    const struct point_3d **neighbors, uint32_t numNeighbors)
+    const struct point_3d *neighbors, uint32_t numNeighbors)
 {
     nearest_neighbor_exact_multi(query, searchSet, searchSetSize,
         sizeof(struct point_3d), neighbors, numNeighbors,

@@ -1,9 +1,8 @@
 include_directories(../include)
 
-add_executable(point_2d_test point_2d_test.c)
-target_link_libraries(point_2d_test m check)
-add_test(NAME point_2d_test COMMAND point_2d_test)
-
-add_executable(point_3d_test point_3d_test.c)
-target_link_libraries(point_3d_test m check)
-add_test(NAME point_3d_test COMMAND point_3d_test)
+add_executable(main_test main_test.c
+        point_2d_test.c
+        point_3d_test.c
+        sort_test.c)
+target_link_libraries(main_test cggml check pthread)
+add_test(NAME main_test COMMAND main_text)

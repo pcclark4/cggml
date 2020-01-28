@@ -9,6 +9,6 @@ const struct point_2d *nearest_neighbor_exact_point_2d(
 
 void nearest_neighbor_exact_point_2d_multi(const struct point_2d *query,
     const struct point_2d *searchSet, uint32_t searchSetSize,
-    const struct point_2d **neighbors, uint32_t numNeighbors);
+    const struct point_2d *neighbors, uint32_t numNeighbors);
 
 #endif // CGGML_NEAREST_NEIGHBOR_EXACT_POINT_2D_H

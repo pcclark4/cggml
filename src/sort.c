@@ -8,6 +8,7 @@ static void swap(void *va, void *vb, size_t s)
     int8_t tmp;
     int8_t *a = va;
     int8_t *b = vb;
+
     while (s > 0) {
         s = s - 1;
         tmp = a[s];
@@ -38,6 +39,7 @@ void sort_insertion(
         }
     }
 }
+
 void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
 {}

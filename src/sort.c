@@ -1,5 +1,4 @@
 #include "sort.h"
-#include <stdio.h>
 #include <string.h>
 
 /* https://rosettacode.org/wiki/Generic_swap#C */
@@ -41,6 +40,5 @@ void sort_insertion(
 }
 void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
-{
+{}
 
-}

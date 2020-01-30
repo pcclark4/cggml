@@ -13,4 +13,4 @@ void nearest_neighbor_exact_multi(const void *query, const void *searchSet,
     uint32_t searchSetSize, size_t elementSize, const void *neighbors,
     uint32_t numNeighbors, distance_func dist);
 
-#endif // CGGML_NEAREST_NEIGHBOR_H
+#endif /* CGGML_NEAREST_NEIGHBOR_H */

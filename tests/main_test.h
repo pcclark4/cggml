@@ -13,4 +13,4 @@ Suite *nearest_neighbor_suite(void);
 
 Suite *sort_suite(void);
 
-#endif // CGGML_MAIN_TEST_H
+#endif /* CGGML_MAIN_TEST_H */

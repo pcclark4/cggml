@@ -3,6 +3,7 @@
 #include <string.h>
 
 /* https://rosettacode.org/wiki/Generic_swap#C */
+/* Might want to move this out to a header file somewhere */
 static void swap(void *va, void *vb, size_t s)
 {
     int8_t tmp;
@@ -16,6 +17,8 @@ static void swap(void *va, void *vb, size_t s)
     }
 }
 
+/* Extremely fast for small array sizes
+ * https://en.wikipedia.org/wiki/Insertion_sort */
 void sort_insertion(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
 {
@@ -36,7 +39,8 @@ void sort_insertion(
         }
     }
 }
-
-void sort_selection(
+void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
-{}
+{
+
+}

@@ -7,6 +7,14 @@ static int32_t int32_comparator_func(const void *left, const void *right)
     return *(int32_t *) left - *(int32_t *) right;
 }
 
+static void assert_is_sorted(const int32_t *arr, uint32_t arrSize)
+{
+    uint32_t i;
+    for (i = 1; i < arrSize; i++) {
+        ck_assert_int_le(arr[i - 1], arr[i]);
+    }
+}
+
 /* Well, I guess I have to do this... */
 START_TEST(int32_comparator_test)
 {
@@ -18,24 +26,19 @@ START_TEST(int32_comparator_test)
 
 START_TEST(sort_insertion_test)
 {
-    uint32_t i;
-    int32_t arr[10] = {5, 3, 8, 10, 6, -1, 2, 4, 7, 9};
-    sort_insertion(arr, 10, sizeof(int32_t), &int32_comparator_func);
-    for (i = 1; i < 10; i++) {
-        ck_assert_int_le(arr[i - 1], arr[i]);
-    }
+    int32_t arr[11] = {5, 3, 8, 10, 6, -1, 2, 4, 7, 9, 2};
+    sort_insertion(arr, 11, sizeof(int32_t), &int32_comparator_func);
+    assert_is_sorted(arr, 11);
 }
 END_TEST
 
-START_TEST(sort_selection_test)
+START_TEST(sort_heap_test)
 {
-    uint32_t i;
-    int32_t arr[10] = {5, 3, 8, 10, 6, -1, 2, 4, 7, 9};
-    sort_selection(arr, 10, sizeof(int32_t), &int32_comparator_func);
-    for (i = 1; i < 10; i++) {
-        ck_assert_int_le(arr[i - 1], arr[i]);
-    }
+    int32_t arr[11] = {5, 3, 8, 10, 6, -1, 2, 4, 7, 9, 2};
+    sort_heap(arr, 11, sizeof(int32_t), &int32_comparator_func);
+    assert_is_sorted(arr, 11);
 }
+END_TEST
 
 Suite *sort_suite(void)
 {
@@ -45,7 +48,7 @@ Suite *sort_suite(void)
     tc_core = tcase_create("default");
     tcase_add_test(tc_core, int32_comparator_test);
     tcase_add_test(tc_core, sort_insertion_test);
-    tcase_add_test(tc_core, sort_selection_test);
+    tcase_add_test(tc_core, sort_heap_test);
     suite_add_tcase(s, tc_core);
     return s;
 }

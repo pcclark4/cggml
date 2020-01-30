@@ -28,4 +28,4 @@ typedef float float32_t;
 #define FLOAT64_MAX DBL_MAX
 typedef double float64_t;
 
-#endif // CGGML_NUMERICAL_TYPEDEFS_H
+#endif /* CGGML_NUMERICAL_TYPEDEFS_H */

@@ -16,4 +16,4 @@ float64_t point_3d_distance_squared(
 float64_t point_3d_distance(
     const struct point_3d *p1, const struct point_3d *p2);
 
-#endif // CGGML_POINT3D_H
+#endif /* CGGML_POINT3D_H */

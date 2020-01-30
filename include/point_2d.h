@@ -15,4 +15,4 @@ float64_t point_2d_distance_squared(
 float64_t point_2d_distance(
     const struct point_2d *p1, const struct point_2d *p2);
 
-#endif // CGGML_POINT2D_H
+#endif /* CGGML_POINT2D_H */

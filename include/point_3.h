@@ -5,9 +5,9 @@
 
 struct point_3
 {
-    float64_t x;
-    float64_t y;
-    float64_t z;
+    const float64_t x;
+    const float64_t y;
+    const float64_t z;
 };
 
 float64_t point_3_distance_squared(

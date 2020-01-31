@@ -5,8 +5,8 @@
 
 struct point_2
 {
-    float64_t x;
-    float64_t y;
+    const float64_t x;
+    const float64_t y;
 };
 
 float64_t point_2_distance_squared(

@@ -35,7 +35,8 @@ END_TEST
 START_TEST(sort_cycle_test)
 {
     int32_t arr[11] = {5, 3, 8, 10, 6, -1, 2, 4, 7, 9, 2};
-    sort_heap(arr, 11, sizeof(int32_t), &int32_comparator_func);
+    int32_t tmp;
+    sort_cycle(arr, 11, sizeof(int32_t), &int32_comparator_func, &tmp);
     assert_is_sorted(arr, 11);
 }
 END_TEST

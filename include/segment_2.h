@@ -11,4 +11,4 @@ struct segment_2
 
 float64_t segment_2_length(const struct segment_2 *segment);
 
-#endif /*CGGML_SEGMENT_2_H*/
+#endif /* CGGML_SEGMENT_2_H */

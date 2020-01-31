@@ -1,5 +1,5 @@
-#ifndef CGGML_POINT2D_H
-#define CGGML_POINT2D_H
+#ifndef CGGML_POINT_2_H
+#define CGGML_POINT_2_H
 
 #include "numerical_typedefs.h"
 
@@ -15,4 +15,4 @@ float64_t point_2_distance_squared(
 float64_t point_2_distance(
     const struct point_2 *p1, const struct point_2 *p2);
 
-#endif /* CGGML_POINT2D_H */
+#endif /* CGGML_POINT_2_H */

@@ -18,6 +18,6 @@ add_library(cggml
         ../include/sort.h
         sort.c
         ../include/segment_2.h
-)
+        segment_2.c)
 
 target_link_libraries(cggml m)

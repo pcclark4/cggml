@@ -9,6 +9,8 @@ Suite *nearest_neighbor_point_2_suite(void);
 Suite *point_3_suite(void);
 Suite *nearest_neighbor_point_3_suite(void);
 
+Suite *segment_2_suite(void);
+
 Suite *nearest_neighbor_suite(void);
 
 Suite *sort_suite(void);

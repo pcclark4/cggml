@@ -18,7 +18,7 @@ START_TEST(point_3_distance_test)
 }
 END_TEST
 
-Suite *point_3_suite()
+Suite *point_3_suite(void)
 {
     Suite *s;
     TCase *tc_core;

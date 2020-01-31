@@ -32,6 +32,14 @@ START_TEST(sort_insertion_test)
 }
 END_TEST
 
+START_TEST(sort_cycle_test)
+{
+    int32_t arr[11] = {5, 3, 8, 10, 6, -1, 2, 4, 7, 9, 2};
+    sort_heap(arr, 11, sizeof(int32_t), &int32_comparator_func);
+    assert_is_sorted(arr, 11);
+}
+END_TEST
+
 START_TEST(sort_heap_test)
 {
     int32_t arr[11] = {5, 3, 8, 10, 6, -1, 2, 4, 7, 9, 2};
@@ -48,6 +56,7 @@ Suite *sort_suite(void)
     tc_core = tcase_create("default");
     tcase_add_test(tc_core, int32_comparator_test);
     tcase_add_test(tc_core, sort_insertion_test);
+    tcase_add_test(tc_core, sort_cycle_test);
     tcase_add_test(tc_core, sort_heap_test);
     suite_add_tcase(s, tc_core);
     return s;

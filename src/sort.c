@@ -1,4 +1,5 @@
 #include "sort.h"
+#include <stdlib.h>
 #include <string.h>
 
 /* https://rosettacode.org/wiki/Generic_swap#C */
@@ -39,9 +40,45 @@ void sort_insertion(
 }
 
 void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
-                comparator_func cmp, void *tmp)
+    comparator_func cmp, void *tmp)
 {
+    int8_t *iterator = arr;
+    uint32_t cycleStart;
+    uint32_t j;
+    uint32_t pos;
 
+    for (cycleStart = 0; cycleStart < arrSize - 1; cycleStart++) {
+        memcpy(tmp, iterator + cycleStart * elementSize, elementSize);
+        pos = cycleStart;
+        for (j = cycleStart + 1; j < arrSize; j++) {
+            if (cmp(iterator + j * elementSize, tmp) < 0) {
+                pos++;
+            }
+        }
+
+        if (pos == cycleStart) {
+            continue;
+        }
+
+        while (cmp(tmp, iterator + pos * elementSize) == 0) {
+            pos++;
+        }
+
+        swap(tmp, iterator + pos * elementSize, elementSize);
+
+        while (pos != cycleStart) {
+            pos = cycleStart;
+            for (j = cycleStart + 1; j < arrSize; j++) {
+                if (cmp(iterator + j * elementSize, tmp) < 0) {
+                    pos++;
+                }
+            }
+            while (cmp(tmp, iterator + pos * elementSize) == 0) {
+                pos++;
+            }
+            swap(tmp, iterator + pos * elementSize, elementSize);
+        }
+    }
 }
 
 void sort_heap(

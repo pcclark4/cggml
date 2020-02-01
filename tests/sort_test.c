@@ -3,19 +3,20 @@
 #include <check.h>
 #include <stdlib.h>
 
-#define ARR_SIZE 500
+#define ARR_SIZE 100
 
 static int32_t testArr[ARR_SIZE];
 
-/* https://stackoverflow.com/a/1514309 */
+/* https://stackoverflow.com/a/1514309
+ * This may actually be useful to have in the main library... */
 static int32_t int32_comparator_func(const void *left, const void *right)
 {
     int32_t cmp;
     int32_t a = *(int32_t *) left;
     int32_t b = *(int32_t *) right;
-    if ((b < 0) && (a > INT32_T_MAX + b)) {
+    if ((b < 0) && (a > INT32_T_MAX + b)) { /* would overflow */
         cmp = 1;
-    } else if ((b > 0) && (a < INT32_T_MIN + b)) {
+    } else if ((b > 0) && (a < INT32_T_MIN + b)) { /* would underflow */
         cmp = -1;
     } else {
         cmp = a - b;

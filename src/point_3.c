@@ -9,8 +9,7 @@ float64_t point_3_distance_squared(
            (p2->z - p1->z) * (p2->z - p1->z);
 }
 
-float64_t point_3_distance(
-    const struct point_3 *p1, const struct point_3 *p2)
+float64_t point_3_distance(const struct point_3 *p1, const struct point_3 *p2)
 {
     return sqrt(point_3_distance_squared(p1, p2));
 }

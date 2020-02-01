@@ -49,6 +49,7 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
 
     for (cycleStart = 0; cycleStart < arrSize - 1; cycleStart++) {
         memcpy(tmp, iterator + cycleStart * elementSize, elementSize);
+
         pos = cycleStart;
         for (j = cycleStart + 1; j < arrSize; j++) {
             if (cmp(iterator + j * elementSize, tmp) < 0) {
@@ -73,14 +74,68 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
                     pos++;
                 }
             }
+
             while (cmp(tmp, iterator + pos * elementSize) == 0) {
                 pos++;
             }
+
             swap(tmp, iterator + pos * elementSize, elementSize);
         }
     }
 }
 
+#define LESS_THAN(I, J, ITERATOR, ELE_SIZE)                                    \
+    cmp(ITERATOR + (I) * (ELE_SIZE), ITERATOR + (J) * (ELE_SIZE)) < 0
+
+#define SWAP(I, J, ITERATOR, ELE_SIZE)                                         \
+    swap(ITERATOR + (I) * (ELE_SIZE), ITERATOR + (J) * (ELE_SIZE), ELE_SIZE)
+
+static void sift_down(void *arr, uint32_t start, uint32_t end,
+    size_t elementSize, comparator_func cmp)
+{
+    int8_t *iterator = arr;
+    uint32_t child;
+
+    while ((start * 2 + 1) <= end) {
+        child = start * 2 + 1;
+
+        if (child < end && LESS_THAN(child, child + 1, iterator, elementSize)) {
+            child++;
+        }
+
+        if (LESS_THAN(start, child, iterator, elementSize)) {
+            SWAP(start, child, iterator, elementSize);
+            start = child;
+        } else {
+            break;
+        }
+    }
+}
+
+static void heapify(
+    void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
+{
+    uint32_t start;
+
+    for (start = (arrSize - 1) / 2; start != 0; start--) {
+        sift_down(arr, start - 1, arrSize - 1, elementSize, cmp);
+    }
+}
+
 void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
-{}
+{
+    int8_t *iterator = arr;
+    uint32_t end = arrSize - 1;
+
+    heapify(arr, arrSize, elementSize, cmp);
+
+    while (end > 0) {
+        SWAP(end, 0, iterator, elementSize);
+        sift_down(arr, 0, end - 1, elementSize, cmp);
+        end--;
+    }
+}
+
+#undef SWAP
+#undef LESS_THAN

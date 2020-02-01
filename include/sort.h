@@ -18,6 +18,9 @@ void sort_insertion(
 void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
     comparator_func cmp, void *tmp);
 
+/* Fastest for larger data sets
+ * https://en.wikipedia.org/wiki/Heapsort
+ * https://rosettacode.org/wiki/Sorting_algorithms/Heapsort#C */
 void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp);
 

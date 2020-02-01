@@ -14,7 +14,7 @@ int main(void)
     srunner_add_suite(sr, segment_2_suite());
     srunner_add_suite(sr, sort_suite());
 
-    srunner_run_all(sr, CK_VERBOSE);
+    srunner_run_all(sr, CK_NORMAL);
     numFailed = srunner_ntests_failed(sr);
     srunner_free(sr);
 

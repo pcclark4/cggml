@@ -4,28 +4,30 @@
 #include <float.h>
 #include <limits.h>
 
-#define INT8_MAX CHAR_MAX
+#define INT8_T_MAX CHAR_MAX
 typedef signed char int8_t;
 
-#define INT16_MAX SHRT_MAX
+#define INT16_T_MAX SHRT_MAX
 typedef signed short int16_t;
 
-#define INT32_MAX INT_MAX
+#define INT32_T_MAX INT_MAX
+#define INT32_T_MIN INT_MIN
 typedef signed int int32_t;
 
-#define UINT8_MAX UCHAR_MAX
+#define UINT8_T_MAX UCHAR_MAX
 typedef unsigned char uint8_t;
 
-#define UINT16_MAX USHRT_MAX
+#define UINT16_T_MAX USHRT_MAX
 typedef unsigned short uint16_t;
 
-#define UINT32_MAX UINT_MAX
+#define UINT32_T_MAX UINT_MAX
 typedef unsigned int uint32_t;
 
-#define FLOAT32_MAX FLT_MAX
+#define FLOAT32_T_MAX FLT_MAX
 typedef float float32_t;
 
-#define FLOAT64_MAX DBL_MAX
+#define FLOAT64_T_MAX DBL_MAX
+#define FLOAT64_T_MIN DBL_MIN
 typedef double float64_t;
 
 #endif /* CGGML_NUMERICAL_TYPEDEFS_H */

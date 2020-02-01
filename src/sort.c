@@ -116,9 +116,15 @@ static void heapify(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
 {
     uint32_t start;
+    for (start = (arrSize - 2) / 2; start >= 0; start--) {
+        sift_down(arr, start, arrSize - 1, elementSize, cmp);
 
-    for (start = (arrSize - 1) / 2; start != 0; start--) {
-        sift_down(arr, start - 1, arrSize - 1, elementSize, cmp);
+        /* If start is 0, we can't let the loop continue. Since start is an
+         * unsigned integer, if we do start-- here, it will wrap around to
+         * max unsigned integer value, and the loop will become infinite. */
+        if (start == 0) {
+            break;
+        }
     }
 }
 

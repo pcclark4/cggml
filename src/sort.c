@@ -148,3 +148,57 @@ void sort_heap(
 
 #undef SWAP
 #undef LESS_THAN
+
+void sort_counting_stable(const void *inputArr, void *outputArr,
+    uint32_t arrSize, size_t eleSize, keygen_func key, uint32_t *countArr,
+    uint32_t kSize)
+{
+    const int8_t *input = inputArr;
+    int8_t *output = outputArr;
+    const int8_t *currentInput;
+    uint32_t currentKey;
+    uint32_t i;
+    uint32_t total = 0;
+
+    for (i = 0; i < arrSize; i++) {
+        countArr[key(input + i * eleSize)]++;
+    }
+
+    for (i = 0; i < kSize; i++) {
+        total = countArr[i] + total;
+        countArr[i] = total;
+    }
+
+    for (i = 0; i < arrSize; i++) {
+        currentInput = input + i * eleSize;
+        currentKey = key(currentInput);
+        memcpy(output + countArr[currentKey] * eleSize, currentInput, eleSize);
+        countArr[currentKey]++;
+    }
+}
+
+void sort_counting_unstable(void *inputArr, uint32_t arrSize, size_t eleSize,
+    keygen_func key, uint32_t *countArr, uint32_t kSize)
+{
+
+}
+
+void sort_counting_uint32(
+    uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t kSize)
+{
+    uint32_t i;
+    uint32_t j;
+    uint32_t k;
+
+    for (i = 0; i < arrSize; i++) {
+        countArr[arr[i]]++;
+    }
+
+    k = 0;
+    for (i = 0; i < kSize; i++) {
+        for (j = 0; j < countArr[i]; j++) {
+            arr[k] = i;
+            k++;
+        }
+    }
+}

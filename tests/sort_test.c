@@ -7,6 +7,11 @@
 
 static int32_t testArr[ARR_SIZE];
 
+struct keyed_item
+{
+    uint32_t key;
+};
+
 /* https://stackoverflow.com/a/1514309
  * This may actually be useful to have in the main library... */
 static int32_t int32_comparator_func(const void *left, const void *right)
@@ -24,7 +29,22 @@ static int32_t int32_comparator_func(const void *left, const void *right)
     return cmp;
 }
 
-static void assert_is_sorted(const int32_t *arr, uint32_t arrSize)
+static uint32_t keyed_item_keygen_func(const void *in)
+{
+    return ((struct keyed_item *) in)->key;
+}
+
+static void assert_is_sorted_int32(const int32_t *arr, uint32_t arrSize)
+{
+    if (arrSize > 1) {
+        uint32_t i;
+        for (i = 1; i < arrSize; i++) {
+            ck_assert_int_le(arr[i - 1], arr[i]);
+        }
+    }
+}
+
+static void assert_is_sorted_uint32(const uint32_t *arr, uint32_t arrSize)
 {
     if (arrSize > 1) {
         uint32_t i;
@@ -74,7 +94,7 @@ END_TEST
 START_TEST(sort_insertion_test)
 {
     sort_insertion(testArr, ARR_SIZE, sizeof(int32_t), &int32_comparator_func);
-    assert_is_sorted(testArr, ARR_SIZE);
+    assert_is_sorted_int32(testArr, ARR_SIZE);
 }
 END_TEST
 
@@ -82,7 +102,7 @@ START_TEST(sort_insertion_test_1_element)
 {
     int32_t tinyArr[1] = {1};
     sort_insertion(tinyArr, 1, sizeof(int32_t), &int32_comparator_func);
-    assert_is_sorted(tinyArr, 1);
+    assert_is_sorted_int32(tinyArr, 1);
 }
 END_TEST
 
@@ -90,7 +110,7 @@ START_TEST(sort_insertion_test_2_elements)
 {
     int32_t tinyArr[2] = {0, 1};
     sort_insertion(tinyArr, 2, sizeof(int32_t), &int32_comparator_func);
-    assert_is_sorted(tinyArr, 2);
+    assert_is_sorted_int32(tinyArr, 2);
 }
 END_TEST
 
@@ -99,7 +119,7 @@ START_TEST(sort_cycle_test)
     int32_t tmp;
     sort_cycle(
         testArr, ARR_SIZE, sizeof(int32_t), &int32_comparator_func, &tmp);
-    assert_is_sorted(testArr, ARR_SIZE);
+    assert_is_sorted_int32(testArr, ARR_SIZE);
 }
 END_TEST
 
@@ -108,7 +128,7 @@ START_TEST(sort_cycle_test_1_element)
     int32_t tmp;
     int32_t tinyArr[1] = {1};
     sort_cycle(tinyArr, 1, sizeof(int32_t), &int32_comparator_func, &tmp);
-    assert_is_sorted(tinyArr, 1);
+    assert_is_sorted_int32(tinyArr, 1);
 }
 END_TEST
 
@@ -117,14 +137,14 @@ START_TEST(sort_cycle_test_2_elements)
     int32_t tmp;
     int32_t tinyArr[2] = {0, 1};
     sort_cycle(tinyArr, 2, sizeof(int32_t), &int32_comparator_func, &tmp);
-    assert_is_sorted(tinyArr, 2);
+    assert_is_sorted_int32(tinyArr, 2);
 }
 END_TEST
 
 START_TEST(sort_heap_test)
 {
     sort_heap(testArr, ARR_SIZE, sizeof(int32_t), &int32_comparator_func);
-    assert_is_sorted(testArr, ARR_SIZE);
+    assert_is_sorted_int32(testArr, ARR_SIZE);
 }
 END_TEST
 
@@ -132,7 +152,7 @@ START_TEST(sort_heap_test_1_element)
 {
     int32_t tinyArr[1] = {1};
     sort_heap(tinyArr, 1, sizeof(int32_t), &int32_comparator_func);
-    assert_is_sorted(tinyArr, 1);
+    assert_is_sorted_int32(tinyArr, 1);
 }
 END_TEST
 
@@ -140,7 +160,38 @@ START_TEST(sort_heap_test_2_elements)
 {
     int32_t tinyArr[2] = {0, 1};
     sort_heap(tinyArr, 2, sizeof(int32_t), &int32_comparator_func);
-    assert_is_sorted(tinyArr, 2);
+    assert_is_sorted_int32(tinyArr, 2);
+}
+END_TEST
+
+START_TEST(sort_counting_stable_test)
+{
+    struct keyed_item inputArr[5] = {{3}, {2}, {24}, {15}, {32}};
+    struct keyed_item outputArr[5] = {0};
+    uint32_t countArr[33] = {0};
+    uint32_t i;
+
+    sort_counting_stable(inputArr, outputArr, 5, sizeof(struct keyed_item),
+        &keyed_item_keygen_func, countArr, 33);
+
+    for (i = 1; i < 5; i++) {
+        ck_assert_int_le(outputArr[i - 1].key, outputArr[i].key);
+    }
+}
+END_TEST
+
+START_TEST(sort_counting_uint32_test)
+{
+    uint32_t inputArr[ARR_SIZE] = {0};
+    uint32_t countingArr[255] = {0};
+    uint32_t i;
+
+    for (i = 0; i < ARR_SIZE; i++) {
+        inputArr[i] = rand() % 255;
+    }
+
+    sort_counting_uint32(inputArr, ARR_SIZE, countingArr, 255);
+    assert_is_sorted_uint32(inputArr, ARR_SIZE);
 }
 END_TEST
 
@@ -161,6 +212,8 @@ Suite *sort_suite(void)
     tcase_add_test(tc_core, sort_heap_test);
     tcase_add_test(tc_core, sort_heap_test_1_element);
     tcase_add_test(tc_core, sort_heap_test_2_elements);
+    tcase_add_test(tc_core, sort_counting_stable_test);
+    tcase_add_test(tc_core, sort_counting_uint32_test);
     suite_add_tcase(s, tc_core);
     return s;
 }

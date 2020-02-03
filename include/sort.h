@@ -5,6 +5,7 @@
 #include "stddef.h"
 
 typedef int32_t (*comparator_func)(const void *, const void *);
+typedef uint32_t (*keygen_func)(const void *);
 
 /* Extremely fast for small array sizes
  * https://en.wikipedia.org/wiki/Insertion_sort */
@@ -23,5 +24,15 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
  * https://rosettacode.org/wiki/Sorting_algorithms/Heapsort#C */
 void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp);
+
+void sort_counting_stable(const void *inputArr, void *outputArr,
+    uint32_t arrSize, size_t eleSize, keygen_func key, uint32_t *countArr,
+    uint32_t kSize);
+
+void sort_counting_unstable(void *inputArr, uint32_t arrSize, size_t eleSize,
+    keygen_func key, uint32_t *countArr, uint32_t kSize);
+
+void sort_counting_uint32(
+    uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t kSize);
 
 #endif /* CGGML_SORT_H */

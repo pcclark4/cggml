@@ -25,12 +25,9 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
 void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp);
 
-void sort_counting_stable(const void *inputArr, void *outputArr,
+void sort_counting(const void *inputArr, void *outputArr,
     uint32_t arrSize, size_t eleSize, keygen_func key, uint32_t *countArr,
     uint32_t kSize);
-
-void sort_counting_unstable(void *inputArr, uint32_t arrSize, size_t eleSize,
-    keygen_func key, uint32_t *countArr, uint32_t kSize);
 
 void sort_counting_uint32(
     uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t kSize);

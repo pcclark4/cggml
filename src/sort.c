@@ -149,7 +149,7 @@ void sort_heap(
 #undef SWAP
 #undef LESS_THAN
 
-void sort_counting_stable(const void *inputArr, void *outputArr,
+void sort_counting(const void *inputArr, void *outputArr,
     uint32_t arrSize, size_t eleSize, keygen_func key, uint32_t *countArr,
     uint32_t kSize)
 {
@@ -177,12 +177,6 @@ void sort_counting_stable(const void *inputArr, void *outputArr,
         memcpy(output + countArr[currentKey] * eleSize, currentInput, eleSize);
         countArr[currentKey]++;
     }
-}
-
-void sort_counting_unstable(void *inputArr, uint32_t arrSize, size_t eleSize,
-    keygen_func key, uint32_t *countArr, uint32_t kSize)
-{
-
 }
 
 void sort_counting_uint32(

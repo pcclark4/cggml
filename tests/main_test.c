@@ -9,7 +9,7 @@ int main(void)
     sr = srunner_create(point_2_suite());
     /* CK_NOFORK allows us to attach debugger while running tests
      * https://github.com/vndmtrx/check-cmake-example */
-    srunner_set_fork_status(sr, CK_NOFORK);
+    /* srunner_set_fork_status(sr, CK_NOFORK); */
     srunner_add_suite(sr, point_3_suite());
     srunner_add_suite(sr, segment_2_suite());
     srunner_add_suite(sr, sort_suite());

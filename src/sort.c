@@ -39,6 +39,8 @@ void sort_insertion(
     }
 }
 
+/* Astonishingly low number of writes, but holy moly it is much slower than
+ * insertion sort. Only use if you must. */
 void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
     comparator_func cmp, void *tmp)
 {
@@ -84,11 +86,12 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
     }
 }
 
-#define LESS_THAN(I, J, ITERATOR, ELE_SIZE)                                    \
-    cmp(ITERATOR + (I) * (ELE_SIZE), ITERATOR + (J) * (ELE_SIZE)) < 0
+/* Convenience macros for heap sort to make it more readable */
+#define LESS_THAN(I, J)                                                        \
+    cmp(iterator + (I) *elementSize, iterator + (J) *elementSize) < 0
 
-#define SWAP(I, J, ITERATOR, ELE_SIZE)                                         \
-    swap(ITERATOR + (I) * (ELE_SIZE), ITERATOR + (J) * (ELE_SIZE), ELE_SIZE)
+#define SWAP(I, J)                                                             \
+    swap(iterator + (I) *elementSize, iterator + (J) *elementSize, elementSize)
 
 static void sift_down(void *arr, uint32_t start, uint32_t end,
     size_t elementSize, comparator_func cmp)
@@ -99,12 +102,12 @@ static void sift_down(void *arr, uint32_t start, uint32_t end,
     while ((start * 2 + 1) <= end) {
         child = start * 2 + 1;
 
-        if (child < end && LESS_THAN(child, child + 1, iterator, elementSize)) {
+        if (child < end && LESS_THAN(child, child + 1)) {
             child++;
         }
 
-        if (LESS_THAN(start, child, iterator, elementSize)) {
-            SWAP(start, child, iterator, elementSize);
+        if (LESS_THAN(start, child)) {
+            SWAP(start, child);
             start = child;
         } else {
             break;
@@ -115,31 +118,31 @@ static void sift_down(void *arr, uint32_t start, uint32_t end,
 static void heapify(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
 {
-    uint32_t start;
-    for (start = (arrSize - 2) / 2; start >= 0; start--) {
-        sift_down(arr, start, arrSize - 1, elementSize, cmp);
-
-        /* If start is 0, we can't let the loop continue. Since start is an
-         * unsigned integer, if we do start-- here, it will wrap around to
-         * max unsigned integer value, and the loop will become infinite. */
-        if (start == 0) {
-            break;
-        }
+    /* Had to do some weirdness here due to start being unsigned */
+    uint32_t start = (arrSize - 2) / 2;
+    sift_down(arr, start, arrSize - 1, elementSize, cmp);
+    if (start != 0) {
+        do {
+            start--;
+            sift_down(arr, start, arrSize - 1, elementSize, cmp);
+        } while (start != 0);
     }
 }
 
 void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
 {
-    int8_t *iterator = arr;
-    uint32_t end = arrSize - 1;
+    if (arrSize > 1) {
+        int8_t *iterator = arr;
+        uint32_t end = arrSize - 1;
 
-    heapify(arr, arrSize, elementSize, cmp);
+        heapify(arr, arrSize, elementSize, cmp);
 
-    while (end > 0) {
-        SWAP(end, 0, iterator, elementSize);
-        sift_down(arr, 0, end - 1, elementSize, cmp);
-        end--;
+        while (end > 0) {
+            SWAP(end, 0);
+            sift_down(arr, 0, end - 1, elementSize, cmp);
+            end--;
+        }
     }
 }
 

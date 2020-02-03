@@ -67,6 +67,7 @@ START_TEST(int32_comparator_test)
     ck_assert_int_eq(int32_comparator_func(&left, &left), 0);
     ck_assert_int_eq(int32_comparator_func(&right, &right), 0);
 }
+END_TEST
 
 START_TEST(sort_insertion_test)
 {

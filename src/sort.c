@@ -6,9 +6,9 @@
 /* Might want to move this out to a header file somewhere */
 static void swap(void *va, void *vb, size_t s)
 {
-    int8_t tmp;
-    int8_t *a = va;
-    int8_t *b = vb;
+    uint8_t tmp;
+    uint8_t *a = va;
+    uint8_t *b = vb;
 
     while (s > 0) {
         s = s - 1;
@@ -21,7 +21,7 @@ static void swap(void *va, void *vb, size_t s)
 void sort_insertion(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
 {
-    int8_t *iterator = arr;
+    uint8_t *iterator = arr;
     void *left;
     void *right;
     uint32_t i;
@@ -44,7 +44,7 @@ void sort_insertion(
 void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
     comparator_func cmp, void *tmp)
 {
-    int8_t *iterator = arr;
+    uint8_t *iterator = arr;
     uint32_t cycleStart;
     uint32_t j;
     uint32_t pos;
@@ -96,7 +96,7 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
 static void sift_down(void *arr, uint32_t start, uint32_t end,
     size_t elementSize, comparator_func cmp)
 {
-    int8_t *iterator = arr;
+    uint8_t *iterator = arr;
     uint32_t child;
 
     while ((start * 2 + 1) <= end) {
@@ -133,7 +133,7 @@ void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
 {
     if (arrSize > 1) {
-        int8_t *iterator = arr;
+        uint8_t *iterator = arr;
         uint32_t end = arrSize - 1;
 
         heapify(arr, arrSize, elementSize, cmp);
@@ -153,10 +153,11 @@ void sort_counting_stable(const void *inputArr, void *outputArr,
     uint32_t arrSize, size_t eleSize, keygen_func key, uint32_t *countArr,
     uint32_t kSize)
 {
-    const int8_t *input = inputArr;
-    int8_t *output = outputArr;
-    const int8_t *currentInput;
+    const uint8_t *input = inputArr;
+    uint8_t *output = outputArr;
+    const uint8_t *currentInput;
     uint32_t currentKey;
+    uint32_t tmpCount;
     uint32_t i;
     uint32_t total = 0;
 
@@ -164,9 +165,10 @@ void sort_counting_stable(const void *inputArr, void *outputArr,
         countArr[key(input + i * eleSize)]++;
     }
 
-    for (i = 0; i < kSize; i++) {
-        total = countArr[i] + total;
+    for (i = 0; i <= kSize; i++) {
+        tmpCount = countArr[i];
         countArr[i] = total;
+        total += tmpCount;
     }
 
     for (i = 0; i < arrSize; i++) {

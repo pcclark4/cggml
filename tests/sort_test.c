@@ -10,6 +10,8 @@ static int32_t testArr[ARR_SIZE];
 struct keyed_item
 {
     uint32_t key;
+    const char *name;
+    uint8_t age;
 };
 
 /* https://stackoverflow.com/a/1514309
@@ -31,7 +33,7 @@ static int32_t int32_comparator_func(const void *left, const void *right)
 
 static uint32_t keyed_item_keygen_func(const void *in)
 {
-    return ((struct keyed_item *) in)->key;
+    return ((const struct keyed_item *) in)->key;
 }
 
 static void assert_is_sorted_int32(const int32_t *arr, uint32_t arrSize)
@@ -166,16 +168,48 @@ END_TEST
 
 START_TEST(sort_counting_stable_test)
 {
-    struct keyed_item inputArr[5] = {{3}, {2}, {24}, {15}, {32}};
-    struct keyed_item outputArr[5] = {0};
-    uint32_t countArr[33] = {0};
+    enum
+    {
+        arrSize = 6,
+        kSize = 32
+    };
+    struct keyed_item inputArr[arrSize] = {{3, "Phil", 29}, {2, "Jim", 67},
+        {24, "Matt", 35}, {15, "Cory", 22}, {15, "Brad", 45}, {32, "Pam", 19}};
+    struct keyed_item outputArr[arrSize] = {0};
+    uint32_t countArr[kSize + 1] = {0};
     uint32_t i;
 
-    sort_counting_stable(inputArr, outputArr, 5, sizeof(struct keyed_item),
-        &keyed_item_keygen_func, countArr, 33);
+    sort_counting_stable(inputArr, outputArr, arrSize,
+        sizeof(struct keyed_item), &keyed_item_keygen_func, countArr, kSize);
 
-    for (i = 1; i < 5; i++) {
+    /* Assert that they are in key order */
+    for (i = 1; i < arrSize; i++) {
         ck_assert_int_le(outputArr[i - 1].key, outputArr[i].key);
+    }
+
+    /* Assert that the sort was stable */
+    ck_assert_pstr_eq(outputArr[2].name, "Cory");
+}
+END_TEST
+
+START_TEST(sort_counting_unstable_test)
+{
+    enum
+    {
+        arrSize = 6,
+        kSize = 32
+    };
+    struct keyed_item inputArr[arrSize] = {{3, "Phil", 29}, {2, "Jim", 67},
+        {24, "Matt", 35}, {15, "Cory", 22}, {15, "Brad", 45}, {32, "Pam", 19}};
+    uint32_t countArr[kSize + 1] = {0};
+    uint32_t i;
+
+    sort_counting_unstable(inputArr, arrSize, sizeof(struct keyed_item),
+        &keyed_item_keygen_func, countArr, kSize);
+
+    /* Assert that they are in key order */
+    for (i = 1; i < arrSize; i++) {
+        ck_assert_int_le(inputArr[i - 1].key, inputArr[i].key);
     }
 }
 END_TEST
@@ -213,6 +247,7 @@ Suite *sort_suite(void)
     tcase_add_test(tc_core, sort_heap_test_1_element);
     tcase_add_test(tc_core, sort_heap_test_2_elements);
     tcase_add_test(tc_core, sort_counting_stable_test);
+    tcase_add_test(tc_core, sort_counting_unstable_test);
     tcase_add_test(tc_core, sort_counting_uint32_test);
     suite_add_tcase(s, tc_core);
     return s;

@@ -150,36 +150,34 @@ void sort_heap(
 #undef LESS_THAN
 
 void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
-    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t kSize)
+    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t maxKey)
 {
     const uint8_t *input = inputArr;
     uint8_t *output = outputArr;
     const uint8_t *currentInput;
     uint32_t currentKey;
-    uint32_t tmpCount;
     uint32_t i;
-    uint32_t total = 0;
 
     for (i = 0; i < arrSize; i++) {
         countArr[key(input + i * eleSize)]++;
     }
 
-    for (i = 0; i <= kSize; i++) {
-        tmpCount = countArr[i];
-        countArr[i] = total;
-        total += tmpCount;
+    for (i = 1; i <= maxKey; i++) {
+        countArr[i] += countArr[i - 1];
     }
 
-    for (i = 0; i < arrSize; i++) {
-        currentInput = input + i * eleSize;
+    for (i = arrSize; i > 0; i--) {
+        currentInput = input + (i - 1) * eleSize;
         currentKey = key(currentInput);
+        countArr[currentKey]--;
         memcpy(output + countArr[currentKey] * eleSize, currentInput, eleSize);
-        countArr[currentKey]++;
     }
 }
 
+/* https://opendatastructures.org/ods-java/11_2_Counting_Sort_Radix_So.html
+ * Unstable but uses N less memory, which could be good for some situations */
 void sort_counting_unstable(void *inputArr, uint32_t arrSize, size_t eleSize,
-    keygen_func key, uint32_t *countArr, uint32_t kSize)
+    keygen_func key, uint32_t *countArr, uint32_t maxKey)
 {
     uint8_t *input = inputArr;
     uint8_t *currentInput;
@@ -192,7 +190,7 @@ void sort_counting_unstable(void *inputArr, uint32_t arrSize, size_t eleSize,
         countArr[key(input + i * eleSize)]++;
     }
 
-    for (i = 0; i <= kSize; i++) {
+    for (i = 0; i <= maxKey; i++) {
         tmpCount = countArr[i];
         countArr[i] = total;
         total += tmpCount;
@@ -201,17 +199,19 @@ void sort_counting_unstable(void *inputArr, uint32_t arrSize, size_t eleSize,
     for (i = 0; i < arrSize; i++) {
         currentInput = input + i * eleSize;
         currentKey = key(currentInput);
-        swap(currentInput, input + countArr[currentKey] * eleSize, eleSize);
-        currentKey = key(currentInput);
-        if (i == countArr[currentKey]) {
-            i++;
+        if (i != countArr[currentKey]) {
+            swap(currentInput, input + countArr[currentKey] * eleSize, eleSize);
+            currentKey = key(currentInput);
+            if (i == countArr[currentKey]) {
+                i++;
+            }
+            countArr[currentKey]++;
         }
-        countArr[currentKey]++;
     }
 }
 
 void sort_counting_uint32(
-    uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t kSize)
+    uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t maxKey)
 {
     uint32_t i;
     uint32_t j;
@@ -222,7 +222,7 @@ void sort_counting_uint32(
     }
 
     k = 0;
-    for (i = 0; i < kSize; i++) {
+    for (i = 0; i < maxKey; i++) {
         for (j = 0; j < countArr[i]; j++) {
             arr[k] = i;
             k++;

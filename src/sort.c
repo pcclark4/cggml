@@ -174,42 +174,6 @@ void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
     }
 }
 
-/* https://opendatastructures.org/ods-java/11_2_Counting_Sort_Radix_So.html
- * Unstable but uses N less memory, which could be good for some situations */
-void sort_counting_unstable(void *inputArr, uint32_t arrSize, size_t eleSize,
-    keygen_func key, uint32_t *countArr, uint32_t maxKey)
-{
-    uint8_t *input = inputArr;
-    uint8_t *currentInput;
-    uint32_t currentKey;
-    uint32_t tmpCount;
-    uint32_t i;
-    uint32_t total = 0;
-
-    for (i = 0; i < arrSize; i++) {
-        countArr[key(input + i * eleSize)]++;
-    }
-
-    for (i = 0; i <= maxKey; i++) {
-        tmpCount = countArr[i];
-        countArr[i] = total;
-        total += tmpCount;
-    }
-
-    for (i = 0; i < arrSize; i++) {
-        currentInput = input + i * eleSize;
-        currentKey = key(currentInput);
-        if (i != countArr[currentKey]) {
-            swap(currentInput, input + countArr[currentKey] * eleSize, eleSize);
-            currentKey = key(currentInput);
-            if (i == countArr[currentKey]) {
-                i++;
-            }
-            countArr[currentKey]++;
-        }
-    }
-}
-
 void sort_counting_uint32(
     uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t maxKey)
 {

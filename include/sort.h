@@ -35,10 +35,6 @@ void sort_heap(
 void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
     size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t maxKey);
 
-/* This uses less space but is not a stable sort */
-void sort_counting_unstable(void *inputArr, uint32_t arrSize, size_t eleSize,
-    keygen_func key, uint32_t *countArr, uint32_t maxKey);
-
 /* In-place and for uint32's only */
 void sort_counting_uint32(
     uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t maxKey);

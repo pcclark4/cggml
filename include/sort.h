@@ -5,6 +5,8 @@
 #include "stddef.h"
 
 typedef int32_t (*comparator_func)(const void *, const void *);
+
+/* Used in counting sort. Given an ADT, give back a nonnegative integer key. */
 typedef uint32_t (*keygen_func)(const void *);
 
 /* Extremely fast for small array sizes
@@ -25,10 +27,19 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
 void sort_heap(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp);
 
-void sort_counting(const void *inputArr, void *outputArr,
-    uint32_t arrSize, size_t eleSize, keygen_func key, uint32_t *countArr,
-    uint32_t kSize);
+/* https://en.wikipedia.org/wiki/Counting_sort
+ * O(n + k) performance
+ * Only practical in situations where the variation in keys is not significantly
+ * greater than the number of items. Often used as a subroutine in radix sort.
+ */
+void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
+    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t kSize);
 
+/* This uses less space but is not a stable sort */
+void sort_counting_unstable(void *inputArr, uint32_t arrSize,
+    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t kSize);
+
+/* In-place and for uint32's only */
 void sort_counting_uint32(
     uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t kSize);
 

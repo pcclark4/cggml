@@ -201,31 +201,31 @@ void sort_counting_uint32(
  */
 void sort_radix_lsd_uint32(uint32_t *arr, uint32_t *aux, uint32_t arrSize)
 {
-    uint32_t counts[2];
+    uint32_t count[2];
     uint32_t i;
     uint32_t j;
     uint32_t currentKey;
 
     for (i = 0; i < NUM_BITS; i++) {
-        counts[0] = 0;
-        counts[1] = 0;
+        count[0] = 0;
+        count[1] = 0;
 
         for (j = 0; j < arrSize; j++) {
             /* arr[j] >> i will shift the 32-bit uint over i-bytes
              * the bitwise AND (& 1u) operation returns the value of the bit
              * in the right-most position. We are slowly creeping up the
              * bits of the number. */
-            counts[(arr[j] >> i) & 1u]++;
+            count[(arr[j] >> i) & 1u]++;
         }
 
         for (j = 1; j < 2; j++) {
-            counts[j] += counts[j - 1];
+            count[j] += count[j - 1];
         }
 
         for (j = arrSize; j > 0; j--) {
             currentKey = (arr[j - 1] >> i) & 1u;
-            counts[currentKey]--;
-            aux[counts[currentKey]] = arr[j - 1];
+            count[currentKey]--;
+            aux[count[currentKey]] = arr[j - 1];
         }
 
         for (j = 0; j < arrSize; j++) {

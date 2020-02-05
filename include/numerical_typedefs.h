@@ -4,6 +4,11 @@
 #include <float.h>
 #include <limits.h>
 
+/**
+ * This is currently a very naive stdint.h replacement for C90.
+ * Will enhance in the future with more definitions for different platforms.
+ */
+
 #define INT8_T_MAX CHAR_MAX
 typedef signed char int8_t;
 

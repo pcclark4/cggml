@@ -199,7 +199,7 @@ START_TEST(sort_counting_uint32_test)
     uint32_t i;
 
     for (i = 0; i < ARR_SIZE; i++) {
-        inputArr[i] = rand() % 255;
+        inputArr[i] = rand() % 255u;
     }
 
     sort_counting_uint32(inputArr, ARR_SIZE, countingArr, 255);
@@ -213,7 +213,7 @@ START_TEST(sort_radix_lsd_uint32_test)
     uint32_t auxArr[ARR_SIZE] = {0};
     uint32_t i;
     for (i = 0; i < ARR_SIZE; i++) {
-        arr[i] = rand() % 100;
+        arr[i] = rand() % 100u;
     }
     sort_radix_lsd_uint32(arr, auxArr, ARR_SIZE);
     assert_is_sorted_uint32(arr, ARR_SIZE);

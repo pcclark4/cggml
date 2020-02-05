@@ -218,7 +218,9 @@ void sort_radix_lsd_uint32(uint32_t *arr, uint32_t *aux, uint32_t arrSize)
             counts[(arr[j] >> i) & 1u]++;
         }
 
-        counts[1] += counts[0];
+        for (j = 1; j < 2; j++) {
+            counts[j] += counts[j - 1];
+        }
 
         for (j = arrSize; j > 0; j--) {
             currentKey = (arr[j - 1] >> i) & 1u;

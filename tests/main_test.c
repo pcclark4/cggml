@@ -13,6 +13,7 @@ int main(void)
     srunner_add_suite(sr, point_3_suite());
     srunner_add_suite(sr, segment_2_suite());
     srunner_add_suite(sr, sort_suite());
+    srunner_add_suite(sr, nearest_neighbor_suite());
 
     srunner_run_all(sr, CK_NORMAL);
     numFailed = srunner_ntests_failed(sr);

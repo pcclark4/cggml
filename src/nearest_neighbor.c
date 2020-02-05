@@ -5,7 +5,7 @@
 const void *nearest_neighbor_exact(const void *query, const void *searchSet,
     uint32_t searchSetSize, size_t elementSize, distance_func dist)
 {
-    const int8_t *iterator = searchSet;
+    const uint8_t *iterator = searchSet;
     const void *nearestNeighbor = NULL;
     float64_t leastDistance = FLOAT64_T_MAX;
     float64_t currentDistance;

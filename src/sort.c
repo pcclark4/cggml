@@ -193,3 +193,43 @@ void sort_counting_uint32(
         }
     }
 }
+
+#define NUM_BITS 32
+
+/* This is probably very inefficient since it uses 32 buckets. Should probably
+ * go by bytes instead of bits. Just trying to get the hang of it first though.
+ */
+void sort_radix_lsd_uint32(uint32_t *arr, uint32_t *aux, uint32_t arrSize)
+{
+    uint32_t counts[2];
+    uint32_t i;
+    uint32_t j;
+    uint32_t currentKey;
+
+    for (i = 0; i < NUM_BITS; i++) {
+        counts[0] = 0;
+        counts[1] = 0;
+
+        for (j = 0; j < arrSize; j++) {
+            /* arr[j] >> i will shift the 32-bit uint over i-bytes
+             * the bitwise AND (& 1u) operation returns the value of the bit
+             * in the right-most position. We are slowly creeping up the
+             * bits of the number. */
+            counts[(arr[j] >> i) & 1u]++;
+        }
+
+        counts[1] += counts[0];
+
+        for (j = arrSize; j > 0; j--) {
+            currentKey = (arr[j - 1] >> i) & 1u;
+            counts[currentKey]--;
+            aux[counts[currentKey]] = arr[j - 1];
+        }
+
+        for (j = 0; j < arrSize; j++) {
+            arr[j] = aux[j];
+        }
+    }
+}
+
+#undef NUM_BITS

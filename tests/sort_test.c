@@ -207,6 +207,19 @@ START_TEST(sort_counting_uint32_test)
 }
 END_TEST
 
+START_TEST(sort_radix_lsd_uint32_test)
+{
+    uint32_t inputArr[ARR_SIZE] = {0};
+    uint32_t auxArr[ARR_SIZE] = {0};
+    uint32_t i;
+    for (i = 0; i < ARR_SIZE; i++) {
+        inputArr[i] = rand() % 100;
+    }
+    sort_radix_lsd_uint32(inputArr, auxArr, ARR_SIZE);
+    assert_is_sorted_uint32(auxArr, ARR_SIZE);
+}
+END_TEST
+
 Suite *sort_suite(void)
 {
     Suite *s;
@@ -226,6 +239,7 @@ Suite *sort_suite(void)
     tcase_add_test(tc_core, sort_heap_test_2_elements);
     tcase_add_test(tc_core, sort_counting_test);
     tcase_add_test(tc_core, sort_counting_uint32_test);
+    tcase_add_test(tc_core, sort_radix_lsd_uint32_test);
     suite_add_tcase(s, tc_core);
     return s;
 }

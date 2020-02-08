@@ -213,7 +213,7 @@ START_TEST(sort_radix_lsd_uint32_test)
     uint32_t auxArr[ARR_SIZE] = {0};
     uint32_t i;
     for (i = 0; i < ARR_SIZE; i++) {
-        arr[i] = rand() % 100u;
+        arr[i] = rand();
     }
     sort_radix_lsd_uint32(arr, auxArr, ARR_SIZE);
     assert_is_sorted_uint32(arr, ARR_SIZE);

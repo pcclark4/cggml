@@ -71,7 +71,8 @@ void sort_heap(
  * @param maxKey The maximum key value present in the input data set
  */
 void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
-    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t maxKey);
+    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t minKey,
+    uint32_t maxKey);
 
 /* In-place and for uint32's only */
 void sort_counting_uint32(

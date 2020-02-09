@@ -39,7 +39,7 @@ void sort_insertion(
 }
 
 /* Astonishingly low number of writes, but holy moly it is much slower than
- * insertion sort. Only use if you must. */
+ * insertion sort. Only use if you must. It does a ton of comparisons. */
 void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
     comparator_func cmp, void *tmp)
 {
@@ -149,7 +149,8 @@ void sort_heap(
 #undef LESS_THAN
 
 void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
-    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t maxKey)
+    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t minKey,
+    uint32_t maxKey)
 {
     const uint8_t *input = inputArr;
     uint8_t *output = outputArr;
@@ -158,16 +159,16 @@ void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
     uint32_t i;
 
     for (i = 0; i < arrSize; i++) {
-        countArr[key(input + i * eleSize)]++;
+        countArr[key(input + i * eleSize) - minKey]++;
     }
 
-    for (i = 1; i <= maxKey; i++) {
+    for (i = 1; i <= maxKey - minKey; i++) {
         countArr[i] += countArr[i - 1];
     }
 
     for (i = arrSize; i > 0; i--) {
         currentInput = input + (i - 1) * eleSize;
-        currentKey = key(currentInput);
+        currentKey = key(currentInput) - minKey;
         countArr[currentKey]--;
         memcpy(output + countArr[currentKey] * eleSize, currentInput, eleSize);
     }

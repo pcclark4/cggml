@@ -180,7 +180,7 @@ START_TEST(sort_counting_test)
     uint32_t i;
 
     sort_counting(inputArr, outputArr, arrSize, sizeof(struct keyed_item),
-        &keyed_item_keygen_func, countArr, kSize);
+        &keyed_item_keygen_func, countArr, 2, kSize);
 
     /* Assert that they are in key order */
     for (i = 1; i < arrSize; i++) {

@@ -16,9 +16,12 @@ See https://libcheck.github.io/check/
 
 `mkdir build` \
 `cd build` \
+`make` 
+
+If you don't want to build tests
+
+`mkdir build` \
+`cd build` \
 `make peometry` \
-`make peometry_tests` \
 `make psort` \
-`make psort_tests` \
-`make psearch` \
-`make psearch_tests`
+`make psearch` 

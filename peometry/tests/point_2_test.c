@@ -1,7 +1,6 @@
-#include "main_test.h"
+#include "peometry_tests.h"
 #include "point_2.h"
 #include <check.h>
-#include <stdio.h>
 
 START_TEST(point_2_distance_squared_test)
 {

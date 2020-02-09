@@ -1,4 +1,4 @@
-#include "main_test.h"
+#include "psort_tests.h"
 #include "sort.h"
 #include <check.h>
 #include <stdlib.h>

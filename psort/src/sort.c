@@ -1,5 +1,4 @@
 #include "sort.h"
-#include <stdlib.h>
 #include <string.h>
 
 /* https://rosettacode.org/wiki/Generic_swap#C */

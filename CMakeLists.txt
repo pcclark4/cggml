@@ -8,8 +8,6 @@ set(CMAKE_C_STANDARD 90)
 set(CMAKE_C_COMPILER "gcc")
 add_compile_options(-std=c90 -pedantic -Wall -Wextra -Wpadded -Wconversion)
 
-add_subdirectory(src)
-add_subdirectory(tests)
-
-enable_testing()
-add_test(NAME cggml_tests COMMAND main_test)
+add_subdirectory(peometry)
+add_subdirectory(psort)
+add_subdirectory(psearch)

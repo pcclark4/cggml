@@ -1,5 +1,4 @@
 #include "nearest_neighbor.h"
-#include "numerical_typedefs.h"
 #include <stddef.h>
 
 const void *nearest_neighbor_exact(const void *query, const void *searchSet,

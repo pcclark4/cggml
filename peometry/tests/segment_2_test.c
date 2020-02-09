@@ -1,4 +1,4 @@
-#include "main_test.h"
+#include "peometry_tests.h"
 #include "segment_2.h"
 #include <check.h>
 

@@ -1,19 +1,13 @@
-#include "main_test.h"
+#include "psort_tests.h"
 #include <stdlib.h>
 
 int main(void)
 {
     int32_t numFailed;
-    SRunner *sr;
-
-    sr = srunner_create(point_2_suite());
+    SRunner *sr  = srunner_create(sort_suite());
     /* CK_NOFORK allows us to attach debugger while running tests
      * https://github.com/vndmtrx/check-cmake-example */
     srunner_set_fork_status(sr, CK_NOFORK);
-    srunner_add_suite(sr, point_3_suite());
-    srunner_add_suite(sr, segment_2_suite());
-    srunner_add_suite(sr, sort_suite());
-    srunner_add_suite(sr, nearest_neighbor_suite());
 
     srunner_run_all(sr, CK_NORMAL);
     numFailed = srunner_ntests_failed(sr);

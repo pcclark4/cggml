@@ -1,7 +1,7 @@
 #ifndef CGGML_SORT_H
 #define CGGML_SORT_H
 
-#include "numerical_typedefs.h"
+#include "../../common/include/numerical_typedefs.h"
 #include "stddef.h"
 
 /** Function pointer that represents a comparison done on two objects

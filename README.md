@@ -14,6 +14,11 @@ refrigerators, and modern PCs
 The unit testing portion of this project has a dependency on *libcheck*.
 See https://libcheck.github.io/check/
 
-`cmake .` \
-`make cggml` \
-`make tests`
+`mkdir build` \
+`cd build` \
+`make peometry` \
+`make peometry_tests` \
+`make psort` \
+`make psort_tests` \
+`make psearch` \
+`make psearch_tests`

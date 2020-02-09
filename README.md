@@ -16,12 +16,14 @@ See https://libcheck.github.io/check/
 
 `mkdir build` \
 `cd build` \
+`cmake ..` \
 `make` 
 
-If you don't want to build tests
+If you don't want to build tests, build the modules separately.
 
 `mkdir build` \
 `cd build` \
+`cmake ..` \
 `make peometry` \
 `make psort` \
 `make psearch` 

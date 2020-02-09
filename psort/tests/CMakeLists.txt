@@ -1,4 +1,5 @@
-include_directories(../include)
+include_directories(../include
+        ../../common/include)
 
 add_executable(psort_tests
         psort_tests.c

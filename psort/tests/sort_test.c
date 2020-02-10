@@ -195,14 +195,14 @@ END_TEST
 START_TEST(sort_counting_uint32_test)
 {
     uint32_t inputArr[ARR_SIZE] = {0};
-    uint32_t countingArr[255] = {0};
+    uint32_t countingArr[101] = {0};
     uint32_t i;
 
     for (i = 0; i < ARR_SIZE; i++) {
-        inputArr[i] = rand() % 255u;
+        inputArr[i] = rand() % 101u + 100;
     }
 
-    sort_counting_uint32(inputArr, ARR_SIZE, countingArr, 255);
+    sort_counting_uint32(inputArr, ARR_SIZE, countingArr, 100, 200);
     assert_is_sorted_uint32(inputArr, ARR_SIZE);
 }
 END_TEST

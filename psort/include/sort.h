@@ -75,8 +75,8 @@ void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
     uint32_t maxKey);
 
 /* In-place and for uint32's only */
-void sort_counting_uint32(
-    uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t maxKey);
+void sort_counting_uint32(uint32_t *arr, uint32_t arrSize, uint32_t *countArr,
+    uint32_t minKey, uint32_t maxKey);
 
 /** https://en.wikipedia.org/wiki/Radix_sort
  * https://algs4.cs.princeton.edu/51radix/LSD.java.html

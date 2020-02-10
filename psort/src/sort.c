@@ -174,21 +174,21 @@ void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
     }
 }
 
-void sort_counting_uint32(
-    uint32_t *arr, uint32_t arrSize, uint32_t *countArr, uint32_t maxKey)
+void sort_counting_uint32(uint32_t *arr, uint32_t arrSize, uint32_t *countArr,
+    uint32_t minKey, uint32_t maxKey)
 {
     uint32_t i;
     uint32_t j;
     uint32_t k;
 
     for (i = 0; i < arrSize; i++) {
-        countArr[arr[i]]++;
+        countArr[arr[i] - minKey]++;
     }
 
     k = 0;
-    for (i = 0; i < maxKey; i++) {
+    for (i = 0; i <= maxKey - minKey; i++) {
         for (j = 0; j < countArr[i]; j++) {
-            arr[k] = i;
+            arr[k] = i + minKey;
             k++;
         }
     }

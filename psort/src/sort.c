@@ -148,9 +148,9 @@ void sort_heap(
 #undef SWAP
 #undef LESS_THAN
 
-void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
-    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t minKey,
-    uint32_t maxKey)
+void sort_counting_generic(const void *inputArr, void *outputArr,
+    uint32_t arrSize, size_t eleSize, keygen_func key, uint32_t *countArr,
+    uint32_t minKey, uint32_t maxKey)
 {
     const uint8_t *input = inputArr;
     uint8_t *output = outputArr;

@@ -67,10 +67,11 @@ void sort_heap(
  * @param arrSize The size of the array
  * @param eleSize The size of each element in bytes
  * @param key Function used to generate a nonnegative integer key for each item
- * @param countArr A zero'd out array of size maxKey + 1
+ * @param countArr A zero'd out array of size (minKey - maxKey) + 1
+ * @param minKey The minimum key value present in the input data set
  * @param maxKey The maximum key value present in the input data set
  */
-void sort_counting(const void *inputArr, void *outputArr, uint32_t arrSize,
+void sort_counting_generic(const void *inputArr, void *outputArr, uint32_t arrSize,
     size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t minKey,
     uint32_t maxKey);
 

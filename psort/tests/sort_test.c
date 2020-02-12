@@ -166,7 +166,7 @@ START_TEST(sort_heap_test_2_elements)
 }
 END_TEST
 
-START_TEST(sort_counting_test)
+START_TEST(sort_counting_generic_test)
 {
     enum
     {
@@ -179,8 +179,8 @@ START_TEST(sort_counting_test)
     uint32_t countArr[kSize + 1] = {0};
     uint32_t i;
 
-    sort_counting(inputArr, outputArr, arrSize, sizeof(struct keyed_item),
-        &keyed_item_keygen_func, countArr, 2, kSize);
+    sort_counting_generic(inputArr, outputArr, arrSize,
+        sizeof(struct keyed_item), &keyed_item_keygen_func, countArr, 2, kSize);
 
     /* Assert that they are in key order */
     for (i = 1; i < arrSize; i++) {
@@ -194,15 +194,19 @@ END_TEST
 
 START_TEST(sort_counting_uint32_test)
 {
+    enum {
+        minKey = 0,
+        maxKey = 50000
+    };
     uint32_t inputArr[ARR_SIZE] = {0};
-    uint32_t countingArr[101] = {0};
+    uint32_t countingArr[(maxKey - minKey) + 1] = {0};
     uint32_t i;
 
     for (i = 0; i < ARR_SIZE; i++) {
-        inputArr[i] = rand() % 101u + 100;
+        inputArr[i] = rand() % ((maxKey - minKey) + 1) + minKey;
     }
 
-    sort_counting_uint32(inputArr, ARR_SIZE, countingArr, 100, 200);
+    sort_counting_uint32(inputArr, ARR_SIZE, countingArr, minKey, maxKey);
     assert_is_sorted_uint32(inputArr, ARR_SIZE);
 }
 END_TEST
@@ -237,7 +241,7 @@ Suite *sort_suite(void)
     tcase_add_test(tc_core, sort_heap_test);
     tcase_add_test(tc_core, sort_heap_test_1_element);
     tcase_add_test(tc_core, sort_heap_test_2_elements);
-    tcase_add_test(tc_core, sort_counting_test);
+    tcase_add_test(tc_core, sort_counting_generic_test);
     tcase_add_test(tc_core, sort_counting_uint32_test);
     tcase_add_test(tc_core, sort_radix_lsd_uint32_test);
     suite_add_tcase(s, tc_core);

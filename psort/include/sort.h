@@ -71,9 +71,9 @@ void sort_heap(
  * @param minKey The minimum key value present in the input data set
  * @param maxKey The maximum key value present in the input data set
  */
-void sort_counting_generic(const void *inputArr, void *outputArr, uint32_t arrSize,
-    size_t eleSize, keygen_func key, uint32_t *countArr, uint32_t minKey,
-    uint32_t maxKey);
+void sort_counting_generic(const void *inputArr, void *outputArr,
+    uint32_t arrSize, size_t eleSize, keygen_func key, uint32_t *countArr,
+    uint32_t minKey, uint32_t maxKey);
 
 /* In-place and for uint32's only */
 void sort_counting_uint32(uint32_t *arr, uint32_t arrSize, uint32_t *countArr,
@@ -83,10 +83,25 @@ void sort_counting_uint32(uint32_t *arr, uint32_t arrSize, uint32_t *countArr,
  * https://algs4.cs.princeton.edu/51radix/LSD.java.html
  * https://opendatastructures.org/ods-java/11_2_Counting_Sort_Radix_So.html
  *
+ * WARNING: Does not currently account for endianness
  * @param arr The array to be sorted
  * @param aux An array of the same size and type as arr
  * @param arrSize The size of the array
  */
-void sort_radix_lsd_uint32(uint32_t *arr, uint32_t *aux, uint32_t arrSize);
+void sort_radix_lsd_uint32_bitwise(
+    uint32_t *arr, uint32_t *aux, uint32_t arrSize);
+
+/**
+ * Byte-wise is about 9-10x faster than bit-wise, but takes about 1Kb of
+ * additional memory instead of just 8 bytes.
+ *
+ * WARNING: Does not currently account for endianness
+ *
+ * @param arr The array to be sorted
+ * @param aux An array of the same size and type as arr
+ * @param arrSize The size of the array
+ */
+void sort_radix_lsd_uint32_bytewise(
+    uint32_t *arr, uint32_t *aux, uint32_t arrSize);
 
 #endif /* CGGML_SORT_H */

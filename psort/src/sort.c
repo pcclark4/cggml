@@ -199,7 +199,8 @@ void sort_counting_uint32(uint32_t *arr, uint32_t arrSize, uint32_t *countArr,
 /* This is probably very inefficient since it uses 32 buckets. Should probably
  * go by bytes instead of bits. Just trying to get the hang of it first though.
  */
-void sort_radix_lsd_uint32(uint32_t *arr, uint32_t *aux, uint32_t arrSize)
+void sort_radix_lsd_uint32_bitwise(
+    uint32_t *arr, uint32_t *aux, uint32_t arrSize)
 {
     uint32_t count[2];
     uint32_t i;
@@ -228,10 +229,40 @@ void sort_radix_lsd_uint32(uint32_t *arr, uint32_t *aux, uint32_t arrSize)
             aux[count[currentKey]] = arr[j - 1];
         }
 
-        for (j = 0; j < arrSize; j++) {
-            arr[j] = aux[j];
-        }
+        memcpy(arr, aux, sizeof(uint32_t) * arrSize);
     }
 }
 
 #undef NUM_BITS
+
+#define NUM_BYTES 4
+#define BITS_PER_BYTE 8
+#define COUNT_SIZE 256
+#define MASK 0xFFu
+
+/* This is actually about 9-10x faster than the per-bit version! Wrote the func
+ * in a short-as-possible, obfuscating style code that everyone hates, just for
+ * fun :). */
+void sort_radix_lsd_uint32_bytewise(
+    uint32_t *arr, uint32_t *aux, uint32_t arrSize)
+{
+    uint32_t c[COUNT_SIZE], i, j;
+    for (i = 0; i < NUM_BYTES; i++) {
+        memset(c, 0u, sizeof(uint32_t) * COUNT_SIZE);
+        for (j = 0; j < arrSize; j++) {
+            c[(arr[j] >> (i * BITS_PER_BYTE)) & MASK]++;
+        }
+        for (j = 1; j < COUNT_SIZE; j++) {
+            c[j] += c[j - 1];
+        }
+        for (j = arrSize; j > 0; j--) {
+            aux[--c[(arr[j - 1] >> (i * BITS_PER_BYTE)) & MASK]] = arr[j - 1];
+        }
+        memcpy(arr, aux, sizeof(uint32_t) * arrSize);
+    }
+}
+
+#undef NUM_BYTES
+#undef BITS_PER_BYTE
+#undef COUNT_SIZE
+#undef MASK

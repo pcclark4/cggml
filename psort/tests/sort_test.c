@@ -194,7 +194,8 @@ END_TEST
 
 START_TEST(sort_counting_uint32_test)
 {
-    enum {
+    enum
+    {
         minKey = 0,
         maxKey = 50000
     };
@@ -219,7 +220,20 @@ START_TEST(sort_radix_lsd_uint32_test)
     for (i = 0; i < ARR_SIZE; i++) {
         arr[i] = rand();
     }
-    sort_radix_lsd_uint32(arr, auxArr, ARR_SIZE);
+    sort_radix_lsd_uint32_bitwise(arr, auxArr, ARR_SIZE);
+    assert_is_sorted_uint32(arr, ARR_SIZE);
+}
+END_TEST
+
+START_TEST(sort_radix_lsd_uint32_bytewise_test)
+{
+    uint32_t arr[ARR_SIZE] = {0};
+    uint32_t auxArr[ARR_SIZE] = {0};
+    uint32_t i;
+    for (i = 0; i < ARR_SIZE; i++) {
+        arr[i] = rand();
+    }
+    sort_radix_lsd_uint32_bytewise(arr, auxArr, ARR_SIZE);
     assert_is_sorted_uint32(arr, ARR_SIZE);
 }
 END_TEST
@@ -244,6 +258,7 @@ Suite *sort_suite(void)
     tcase_add_test(tc_core, sort_counting_generic_test);
     tcase_add_test(tc_core, sort_counting_uint32_test);
     tcase_add_test(tc_core, sort_radix_lsd_uint32_test);
+    tcase_add_test(tc_core, sort_radix_lsd_uint32_bytewise_test);
     suite_add_tcase(s, tc_core);
     return s;
 }

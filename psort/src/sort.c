@@ -1,22 +1,6 @@
 #include "sort.h"
 #include <string.h>
 
-/* https://rosettacode.org/wiki/Generic_swap#C */
-/* Might want to move this out to a header file somewhere */
-static void swap(void *va, void *vb, size_t s)
-{
-    uint8_t tmp;
-    uint8_t *a = va;
-    uint8_t *b = vb;
-
-    while (s > 0) {
-        s = s - 1;
-        tmp = a[s];
-        a[s] = b[s];
-        b[s] = tmp;
-    }
-}
-
 void sort_insertion(
     void *arr, uint32_t arrSize, size_t elementSize, comparator_func cmp)
 {
@@ -33,7 +17,7 @@ void sort_insertion(
             if (cmp(left, right) <= 0) {
                 break;
             }
-            swap(left, right, elementSize);
+            swap_bytes(left, right, elementSize);
         }
     }
 }
@@ -66,7 +50,7 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
             pos++;
         }
 
-        swap(tmp, iterator + pos * elementSize, elementSize);
+        swap_bytes(tmp, iterator + pos * elementSize, elementSize);
 
         while (pos != cycleStart) {
             pos = cycleStart;
@@ -80,7 +64,7 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
                 pos++;
             }
 
-            swap(tmp, iterator + pos * elementSize, elementSize);
+            swap_bytes(tmp, iterator + pos * elementSize, elementSize);
         }
     }
 }
@@ -90,7 +74,7 @@ void sort_cycle(void *arr, uint32_t arrSize, size_t elementSize,
     cmp(iterator + (I) *elementSize, iterator + (J) *elementSize) < 0
 
 #define SWAP(I, J)                                                             \
-    swap(iterator + (I) *elementSize, iterator + (J) *elementSize, elementSize)
+    swap_bytes(iterator + (I) *elementSize, iterator + (J) *elementSize, elementSize)
 
 static void sift_down(void *arr, uint32_t start, uint32_t end,
     size_t elementSize, comparator_func cmp)
@@ -196,9 +180,6 @@ void sort_counting_uint32(uint32_t *arr, uint32_t arrSize, uint32_t *countArr,
 
 #define NUM_BITS 32
 
-/* This is probably very inefficient since it uses 32 buckets. Should probably
- * go by bytes instead of bits. Just trying to get the hang of it first though.
- */
 void sort_radix_lsd_uint32_bitwise(
     uint32_t *arr, uint32_t *aux, uint32_t arrSize)
 {
@@ -261,6 +242,10 @@ void sort_radix_lsd_uint32_bytewise(
         memcpy(arr, aux, sizeof(uint32_t) * arrSize);
     }
 }
+
+static void sort_radix_lsd_float32_bytewise(
+    float32_t *arr, float32_t *aux, uint32_t arrSize)
+{}
 
 #undef NUM_BYTES
 #undef BITS_PER_BYTE

@@ -2,19 +2,8 @@
 #define CGGML_SORT_H
 
 #include "numerical_typedefs.h"
+#include "sort_common.h"
 #include "stddef.h"
-
-/** Function pointer that represents a comparison done on two objects
- * @returns Zero if the items are equal, a positive integer if a is greater than
- * b, a negative integer if a is less than b
- */
-typedef int32_t (*comparator_func)(const void *a, const void *b);
-
-/** Used in counting (and possibly? radix) sort.
- * @param obj The object to generate a key for
- * @returns A nonnegative key representation of obj
- */
-typedef uint32_t (*keygen_func)(const void *obj);
 
 /** Extremely fast for small array sizes
  * https://en.wikipedia.org/wiki/Insertion_sort
@@ -83,7 +72,6 @@ void sort_counting_uint32(uint32_t *arr, uint32_t arrSize, uint32_t *countArr,
  * https://algs4.cs.princeton.edu/51radix/LSD.java.html
  * https://opendatastructures.org/ods-java/11_2_Counting_Sort_Radix_So.html
  *
- * WARNING: Does not currently account for endianness
  * @param arr The array to be sorted
  * @param aux An array of the same size and type as arr
  * @param arrSize The size of the array
@@ -94,8 +82,6 @@ void sort_radix_lsd_uint32_bitwise(
 /**
  * Byte-wise is about 9-10x faster than bit-wise, but takes about 1Kb of
  * additional memory instead of just 8 bytes.
- *
- * WARNING: Does not currently account for endianness
  *
  * @param arr The array to be sorted
  * @param aux An array of the same size and type as arr

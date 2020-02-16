@@ -14,23 +14,6 @@ struct keyed_item
     uint8_t age;
 };
 
-/* https://stackoverflow.com/a/1514309
- * This may actually be useful to have in the main library... */
-static int32_t int32_comparator_func(const void *left, const void *right)
-{
-    int32_t cmp;
-    int32_t a = *(int32_t *) left;
-    int32_t b = *(int32_t *) right;
-    if ((b < 0) && (a > INT32_T_MAX + b)) { /* would overflow */
-        cmp = 1;
-    } else if ((b > 0) && (a < INT32_T_MIN + b)) { /* would underflow */
-        cmp = -1;
-    } else {
-        cmp = a - b;
-    }
-    return cmp;
-}
-
 static uint32_t keyed_item_keygen_func(const void *in)
 {
     return ((const struct keyed_item *) in)->key;

@@ -19,6 +19,4 @@
 void sort_quick(void *arr, uint32_t arrSize, void *pivot, size_t elementSize,
     comparator_func cmp);
 
-void sort_merge(void);
-
 #endif /* CGGML_SORT_RECURSIVE_H */

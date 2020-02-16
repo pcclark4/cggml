@@ -17,5 +17,6 @@ typedef int32_t (*comparator_func)(const void *a, const void *b);
 typedef uint32_t (*keygen_func)(const void *obj);
 
 void swap_bytes(void *va, void *vb, size_t s);
+int32_t int32_comparator_func(const void *left, const void *right);
 
 #endif /* CGGML_SORT_COMMON_H */

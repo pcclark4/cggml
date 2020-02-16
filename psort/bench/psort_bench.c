@@ -5,16 +5,20 @@
 #include <string.h>
 #include <time.h>
 
+#define NANOS_PER_MILLI 1000000
+
 #define START_BENCH(NAME)                                                      \
     static void NAME(void)                                                     \
     {                                                                          \
+        struct timespec startTime;                                             \
+        struct timespec elapsedTime;                                           \
         reset_test_arr();                                                      \
-        struct timespec startTime = timer_start();
+        startTime = timer_start();
 
 #define END_BENCH(NAME)                                                        \
-    struct timespec elapsedTime = timer_stop(&startTime);                      \
-    printf("%s: %lds %ld ms\n", #NAME, elapsedTime.tv_sec,                      \
-        elapsedTime.tv_nsec / 1000000);                                        \
+    elapsedTime = timer_stop(&startTime);                                      \
+    printf("%s: %lds %ld ms\n", #NAME, elapsedTime.tv_sec,                     \
+        elapsedTime.tv_nsec / NANOS_PER_MILLI);                                \
     }
 
 #define ARR_SIZE 1000000
@@ -50,31 +54,31 @@ START_BENCH(bench_insertion_sort)
 END_BENCH(bench_insertion_sort)
 
 START_BENCH(bench_radix_sort_bitwise)
-    {
-        unsigned int *aux = malloc(sizeof(unsigned int) * ARR_SIZE);
-        sort_radix_lsd_uint32_bitwise(testArr, aux, ARR_SIZE);
-    }
+{
+    unsigned int *aux = malloc(sizeof(int) * ARR_SIZE);
+    sort_radix_lsd_uint32_bitwise(testArr, aux, ARR_SIZE);
+}
 END_BENCH(bench_radix_sort_bitwise)
 
 START_BENCH(bench_radix_sort_bytewise)
 {
-    unsigned int *aux = malloc(sizeof(unsigned int) * ARR_SIZE);
+    unsigned int *aux = malloc(sizeof(int) * ARR_SIZE);
     sort_radix_lsd_uint32_bytewise(testArr, aux, ARR_SIZE);
 }
 END_BENCH(bench_radix_sort_bytewise)
 
 int main(void)
 {
-    baseArr = malloc(sizeof(unsigned int) * ARR_SIZE);
-    testArr = malloc(sizeof(unsigned int) * ARR_SIZE);
     int i;
+    baseArr = malloc(sizeof(int) * ARR_SIZE);
+    testArr = malloc(sizeof(int) * ARR_SIZE);
     for (i = 0; i < ARR_SIZE; i++) {
-        baseArr[i] = rand() % INT16_T_MAX;
+        baseArr[i] = rand();
     }
 
     bench_quicksort();
     bench_heapsort();
-//    bench_insertion_sort();
+    //    bench_insertion_sort();
     bench_radix_sort_bitwise();
     bench_radix_sort_bytewise();
 
@@ -93,8 +97,9 @@ static struct timespec timer_start(void)
 static struct timespec timer_stop(struct timespec *time)
 {
     struct timespec stop;
-    clock_gettime(CLOCK_MONOTONIC_RAW, &stop);
     struct timespec temp;
+
+    clock_gettime(CLOCK_MONOTONIC_RAW, &stop);
     if ((stop.tv_nsec - time->tv_nsec) < 0) {
         temp.tv_sec = stop.tv_sec - time->tv_sec - 1;
         temp.tv_nsec = 1000000000 + stop.tv_nsec - time->tv_nsec;

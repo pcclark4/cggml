@@ -105,7 +105,6 @@ int main(void)
 
     bench_quicksort();
     bench_heapsort();
-    //    bench_insertion_sort();
     bench_counting_sort();
     bench_counting_sort_generic();
     bench_radix_sort_bitwise();
@@ -116,8 +115,9 @@ int main(void)
     return 0;
 }
 
-// http://www.guyrutenberg.com/2007/09/22/profiling-code-using-clock_gettime/
-// https://stackoverflow.com/questions/6749621/how-to-create-a-high-resolution-timer-in-linux-to-measure-program-performance
+/* http://www.guyrutenberg.com/2007/09/22/profiling-code-using-clock_gettime/
+ * https://stackoverflow.com/questions/6749621/how-to-create-a-high-resolution-timer-in-linux-to-measure-program-performance
+ */
 static struct timespec timer_start(void)
 {
     struct timespec time;

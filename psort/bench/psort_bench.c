@@ -58,13 +58,31 @@ START_BENCH(bench_counting_sort)
 {
     uint32_t *countArr = malloc(sizeof(uint32_t) * (MAX_NUM + 1L));
     sort_counting_uint32(testArr, ARR_SIZE, countArr, 0L, MAX_NUM);
+    free(countArr);
 }
 END_BENCH(bench_counting_sort)
+
+static uint32_t uint32_keygen(const void *obj)
+{
+    return *(uint32_t *) obj;
+}
+
+START_BENCH(bench_counting_sort_generic)
+{
+    uint32_t *countArr = malloc(sizeof(uint32_t) * (MAX_NUM + 1L));
+    uint32_t *outArr = malloc(sizeof(uint32_t) * ARR_SIZE);
+    sort_counting_generic(testArr, outArr, ARR_SIZE, sizeof(uint32_t),
+        &uint32_keygen, countArr, 0L, MAX_NUM);
+    free(outArr);
+    free(countArr);
+}
+END_BENCH(bench_counting_sort_generic)
 
 START_BENCH(bench_radix_sort_bitwise)
 {
     unsigned int *aux = malloc(sizeof(int) * ARR_SIZE);
     sort_radix_lsd_uint32_bitwise(testArr, aux, ARR_SIZE);
+    free(aux);
 }
 END_BENCH(bench_radix_sort_bitwise)
 
@@ -72,6 +90,7 @@ START_BENCH(bench_radix_sort_bytewise)
 {
     unsigned int *aux = malloc(sizeof(int) * ARR_SIZE);
     sort_radix_lsd_uint32_bytewise(testArr, aux, ARR_SIZE);
+    free(aux);
 }
 END_BENCH(bench_radix_sort_bytewise)
 
@@ -88,9 +107,12 @@ int main(void)
     bench_heapsort();
     //    bench_insertion_sort();
     bench_counting_sort();
+    bench_counting_sort_generic();
     bench_radix_sort_bitwise();
     bench_radix_sort_bytewise();
 
+    free(testArr);
+    free(baseArr);
     return 0;
 }
 

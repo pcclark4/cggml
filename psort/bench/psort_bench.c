@@ -5,7 +5,7 @@
 #include <string.h>
 #include <time.h>
 
-#define NANOS_PER_MILLI 1000000
+#define NANOS_PER_MILLI 1000000L
 
 #define START_BENCH(NAME)                                                      \
     static void NAME(void)                                                     \
@@ -21,7 +21,8 @@
         elapsedTime.tv_nsec / NANOS_PER_MILLI);                                \
     }
 
-#define ARR_SIZE 1000000
+#define ARR_SIZE 1000000L
+#define MAX_NUM 1000L
 
 static unsigned int *baseArr = NULL;
 static unsigned int *testArr = NULL;
@@ -53,6 +54,13 @@ START_BENCH(bench_insertion_sort)
 }
 END_BENCH(bench_insertion_sort)
 
+START_BENCH(bench_counting_sort)
+{
+    uint32_t *countArr = malloc(sizeof(uint32_t) * (MAX_NUM + 1L));
+    sort_counting_uint32(testArr, ARR_SIZE, countArr, 0L, MAX_NUM);
+}
+END_BENCH(bench_counting_sort)
+
 START_BENCH(bench_radix_sort_bitwise)
 {
     unsigned int *aux = malloc(sizeof(int) * ARR_SIZE);
@@ -73,12 +81,13 @@ int main(void)
     baseArr = malloc(sizeof(int) * ARR_SIZE);
     testArr = malloc(sizeof(int) * ARR_SIZE);
     for (i = 0; i < ARR_SIZE; i++) {
-        baseArr[i] = rand();
+        baseArr[i] = rand() % (MAX_NUM + 1L);
     }
 
     bench_quicksort();
     bench_heapsort();
     //    bench_insertion_sort();
+    bench_counting_sort();
     bench_radix_sort_bitwise();
     bench_radix_sort_bytewise();
 

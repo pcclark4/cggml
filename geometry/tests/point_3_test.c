@@ -1,4 +1,4 @@
-#include "peometry_tests.h"
+#include "geometry_tests.h"
 #include "point_3.h"
 #include <check.h>
 

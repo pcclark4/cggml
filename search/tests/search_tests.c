@@ -1,4 +1,4 @@
-#include "psearch_tests.h"
+#include "search_tests.h"
 #include <stdlib.h>
 
 int main(void)

@@ -24,6 +24,6 @@ If you don't want to build tests, build the modules separately.
 `mkdir build` \
 `cd build` \
 `cmake ..` \
-`make peometry` \
-`make psort` \
-`make psearch` 
+`make geometry` \
+`make sort` \
+`make search` 

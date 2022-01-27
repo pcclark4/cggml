@@ -1,6 +1,6 @@
-# cggml
+# cggml (rhymes with signal)
 
-A general algorithms library with a focus on geometry. If you aren't Phil or 
+A general algorithms library for the purpose of me practicing C. If you aren't Phil or 
 someone who knows Phil, use at your own risk.
 
 Goals

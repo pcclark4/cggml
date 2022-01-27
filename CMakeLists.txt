@@ -6,7 +6,8 @@ project(CGGML
 
 set(CMAKE_C_STANDARD 90)
 set(CMAKE_C_COMPILER "gcc")
-add_compile_options(-std=c90 -pedantic -Wall -Wextra -Wpadded -Wconversion)
+add_compile_options(-std=c90 -pedantic -Wall -Wextra -Wpadded -Wfatal-errors 
+-Wconversion -Werror=declaration-after-statement)
 
 add_subdirectory(geometry)
 add_subdirectory(sort)

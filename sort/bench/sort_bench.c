@@ -105,6 +105,7 @@ int main(void)
 
     bench_quicksort();
     bench_heapsort();
+    /* bench_insertion_sort(); */
     bench_counting_sort();
     bench_counting_sort_generic();
     bench_radix_sort_bitwise();
